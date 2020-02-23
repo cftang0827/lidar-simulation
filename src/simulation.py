@@ -105,7 +105,7 @@ def get_flight_path_from_csv(filename):
 def main():
     flight_path_x, flight_path_y = get_flight_path_from_csv(flight_path)
     wall_map = WallInfoMap(mapping_path)
-    lidar_object = Lidar(1, 0.1, 100, flight_path_x[0], flight_path_y[0], wall_map)
+    lidar_object = Lidar(0.5, 0.05, 100, flight_path_x[0], flight_path_y[0], wall_map)
     scan_path_data = [lidar_object.scan()]
     for x, y in zip(flight_path_x[1:], flight_path_y[1:]):
         print(x, y)

@@ -1,5 +1,7 @@
 import csv
 
+import numpy as np
+
 
 class WallInfoMap:
     def __init__(self, mapping_path):
@@ -154,4 +156,3 @@ def plot_all(
     axs.scatter(x_points, y_points, s=2, c="g", marker="x")
 
     axs.plot(flight_path_x[point_index], flight_path_y[point_index], "ro")
-

@@ -66,13 +66,24 @@ def get_point_lidar_edge_data(point_xy, lidar_point_data):
     return x_points, y_points
 
 
-def plot_all(axs, point_index, flight_path_x, flight_path_y, lidar_points):
+def plot_all(
+    axs, point_index, flight_path_x, flight_path_y, lidar_points, annotate=False
+):
     x_points, y_points = get_point_lidar_edge_data(
         (flight_path_x[point_index], flight_path_y[point_index]),
         lidar_points[point_index],
     )
 
     axs.plot(flight_path_x, flight_path_y, "bo")
+
+    if annotate:
+        for index, (x, y) in enumerate(zip(flight_path_x, flight_path_y)):
+            axs.annotate(
+                "{}".format(index),
+                xy=(x, y),
+                xytext=(-20, 10),
+                textcoords="offset points",
+            )
 
     axs.scatter(x_points, y_points, s=2, c="g", marker="x")
 
@@ -101,7 +112,17 @@ def main():
                     'Error in input scan_id, only scan id number and "all" are available'
                 )
             for index in range(len(flight_path_x)):
-                plot_all(axs, index, flight_path_x, flight_path_y, lidar_points)
+
+                annotate = True if index == 0 else False
+                plot_all(
+                    axs,
+                    index,
+                    flight_path_x,
+                    flight_path_y,
+                    lidar_points,
+                    annotate=annotate,
+                )
+            plt.title("Simulation figure")
             plt.show()
 
         else:
@@ -112,7 +133,10 @@ def main():
                         scan_id, len(flight_path_x) - 1
                     )
                 )
-            plot_all(axs, scan_id, flight_path_x, flight_path_y, lidar_points)
+            plot_all(
+                axs, scan_id, flight_path_x, flight_path_y, lidar_points, annotate=True
+            )
+            plt.title("Simulation figure")
             plt.show()
     except Exception as e:
         print("Error message: {}".format(e))

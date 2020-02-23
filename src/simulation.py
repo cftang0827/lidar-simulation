@@ -108,10 +108,9 @@ def main():
     lidar_object = Lidar(0.5, 0.05, 100, flight_path_x[0], flight_path_y[0], wall_map)
     scan_path_data = [lidar_object.scan()]
     for x, y in zip(flight_path_x[1:], flight_path_y[1:]):
-        print(x, y)
+        print("Simulating point ({}, {})".format(x, y))
         lidar_object.update_location(x, y)
         scan_path_data.append(lidar_object.scan())
-    print(len(scan_path_data))
     with open(lidar_points_path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
 

@@ -1,8 +1,9 @@
 import csv
-import numpy as np
 from argparse import ArgumentParser
-from utils import get_flight_path_from_csv, WallInfoMap, Lidar, write_lidar_points_csv
 
+import numpy as np
+
+from utils import Lidar, WallInfoMap, get_flight_path_from_csv, write_lidar_points_csv
 
 # Parse argument, get the file name of flight path and lidar points
 parser = ArgumentParser()

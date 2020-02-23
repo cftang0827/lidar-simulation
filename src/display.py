@@ -2,15 +2,16 @@ import csv
 import sys
 import time
 from argparse import ArgumentParser
+
+import numpy as np
+from matplotlib import pyplot as plt
+
 from utils import (
     get_flight_path_from_csv,
     get_lidar_points_from_csv,
     get_point_lidar_edge_data,
     plot_all,
 )
-
-import numpy as np
-from matplotlib import pyplot as plt
 
 # Parse argument, get the file name of flight path and lidar points
 parser = ArgumentParser()

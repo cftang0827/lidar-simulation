@@ -11,11 +11,6 @@ parser.add_argument("--lidar-points")
 args = parser.parse_args()
 
 
-flight_path = args.flight_path
-lidar_points_path = args.lidar_points
-mapping_path = args.mapping_files
-
-
 class WallInfoMap:
     def __init__(self, mapping_path):
         self.mapping_list = []
@@ -103,6 +98,11 @@ def get_flight_path_from_csv(filename):
 
 
 def main():
+
+    flight_path = args.flight_path
+    lidar_points_path = args.lidar_points
+    mapping_path = args.mapping_files
+
     flight_path_x, flight_path_y = get_flight_path_from_csv(flight_path)
     wall_map = WallInfoMap(mapping_path)
     lidar_object = Lidar(0.5, 0.05, 100, flight_path_x[0], flight_path_y[0], wall_map)

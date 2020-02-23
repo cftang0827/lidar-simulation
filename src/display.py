@@ -10,11 +10,8 @@ from matplotlib import pyplot as plt
 parser = ArgumentParser()
 parser.add_argument("--flight-path")
 parser.add_argument("--lidar-points")
+parser.add_argument("--scan-id")
 args = parser.parse_args()
-
-
-flight_path = args.flight_path
-lidar_points_path = args.lidar_points
 
 
 def get_flight_path_from_csv(filename):
@@ -83,34 +80,43 @@ def plot_all(axs, point_index, flight_path_x, flight_path_y, lidar_points):
 
 
 def main():
+
+    flight_path = args.flight_path
+    lidar_points_path = args.lidar_points
+    scan_id = args.scan_id
+
     flight_path_x, flight_path_y = get_flight_path_from_csv(flight_path)
     lidar_points = get_lidar_points_from_csv(lidar_points_path)
+    if len(flight_path_x) != len(flight_path_y) or len(flight_path_x) != len(
+        lidar_points
+    ):
+        raise Exception(
+            "Some errors in flight path file or lidar points file, number not match"
+        )
+    try:
+        fig, axs = plt.subplots(1, 1)
+        if not scan_id.isdigit():
+            if scan_id.lower().strip() != "all":
+                raise Exception(
+                    'Error in input scan_id, only scan id number and "all" are available'
+                )
+            for index in range(len(flight_path_x)):
+                plot_all(axs, index, flight_path_x, flight_path_y, lidar_points)
+            plt.show()
 
-    while True:
-        try:
-
-            fig, axs = plt.subplots(1, 1)
-            input_data = input(
-                "Input the scan ID or * for all, input exit to exit the program: \n"
-            )
-            if input_data == "*":
-                for index in range(len(flight_path_x)):
-                    plot_all(axs, index, flight_path_x, flight_path_y, lidar_points)
-                plt.show()
-            elif input_data.lower().strip() == "exit":
-                exit()
-            else:
-                scan_id = int(input_data)
-                plot_all(axs, scan_id, flight_path_x, flight_path_y, lidar_points)
-                plt.show()
-
-        except KeyboardInterrupt:
-            print("Exit the program")
-            exit()
-
-        except Exception as e:
-            print("Error message: {}".format(e))
-            exit()
+        else:
+            scan_id = int(scan_id)
+            if scan_id >= len(flight_path_x) or scan_id < 0:
+                raise Exception(
+                    "Scan id {} is not match, only 0 - {} are available".format(
+                        scan_id, len(flight_path_x) - 1
+                    )
+                )
+            plot_all(axs, scan_id, flight_path_x, flight_path_y, lidar_points)
+            plt.show()
+    except Exception as e:
+        print("Error message: {}".format(e))
+        exit()
 
 
 if __name__ == "__main__":

@@ -55,8 +55,8 @@ For example, we could use display program to show the simulation room
 
 #### 1. Git glone this repository
 ```shell
-$ git clone https://github.com/cftang0827/scoville-lidar-simulation.git
-$ cd scoville-lidar-simulation![4](https://i.imgur.com/fwJAlyc.png)
+$ git clone https://github.com/cftang0827/lidar-simulation.git
+$ cd lidar-simulation
 ```
 
 #### 2. Install dependencies
